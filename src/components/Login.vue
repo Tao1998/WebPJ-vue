@@ -22,7 +22,10 @@
         </div>
     </div>
 </template>
+
 <script>
+import { getRoutesOfRole } from "../router/index";
+
 export default {
   data() {
     return {
@@ -48,15 +51,34 @@ export default {
     },
     login() {
       this.$refs.loginFormRef.validate(async valid => {
+
         if (!valid) return;
         // 调用get请求
         const {data :res} = await this.$http.post("login", this.loginForm); // 访问后台
         if (res.flag == "ok") {
-           window.sessionStorage.setItem('flag','ok'); // session 放置
-           console.log(res.user.role)
-           window.sessionStorage.setItem('role','超级管理员'); // session 放置
-           this.$message.success("登陆成功！！！");
-           this.$router.push({ path: "/home"});
+          window.sessionStorage.setItem('flag','ok'); // session 放置
+
+          console.log(res.user.role)
+          // 获取后台传过来的 role，这里暂且设置为 普通用户
+          const role = '普通用户'
+          window.sessionStorage.setItem('role', role); // session 放置
+
+          // 根据用户角色筛选出该用户可访问的路由列表
+          const routes = getRoutesOfRole([role])
+          // 打印这个列表
+          console.log(role ,"可以访问以下路由", routes);
+
+          // 打印一下当前 router 可访问的路由列表
+          console.log("添加角色路由之前", this.$router.getRoutes());
+
+          // 把刚才筛选出来的，该角色可访问的路由表添加进 router
+          this.$router.addRoutes(routes);
+
+          // 添加之后，打印一下现在的 router，看看是不是添加进来了
+          console.log("添加角色路由之后", this.$router.getRoutes());
+
+          this.$message.success("登陆成功！！！");          
+          this.$router.push({ path: "/home"});
         }else{
           this.$message.error("登录失败！！！");
         }

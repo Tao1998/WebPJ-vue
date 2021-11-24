@@ -13,58 +13,6 @@ import Food from '../components/user/Food.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path: "/",
-    redirect: "/login"
-  },
-  {
-    path: "/login",
-    component: Login
-  },
-  {
-    path: "/home",
-    component: Home,
-    redirect: "/welcome",
-    children: [
-      { path: "/welcome", component: Welcome, },
-      { path: "/user", component: UserList, },
-      { path: "/rights", component: Right, },
-      { path: "/introduction", component: Film, },
-      { path: "/calories", component: Calories, },
-      { path: "/food", component: Food, }
-    ]
-  }
-]
-
-const router = new VueRouter({
-  routes
-})
-
-// 挂载路由导航守卫
-router.beforeEach((to, from, next) => {
-  // to:将要访问的路径
-  // from:从哪里访问的路径
-  // next:之后要做的任务，是一个函数
-  // next()放行， next('/URL')强制跳转的路径。
-  
-  // 访问路径为登录，直接放行
-  if (to.path == '/login') next();
-
-  // 从 session 获取登录 flag
-  const flagStr = window.sessionStorage.getItem("flag");
-
-  // 没登录去登录
-  if (!flagStr) next('/login');
-
-  next();
-})
-
-export default router
-
-// 22222222222222222222222222222222222222222222222222222222222222
-
-
 /**
 * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
 * redirect: noredirect           if `redirect:noredirect` will no redirct in the breadcrumb
@@ -77,24 +25,24 @@ export default router
  }
 **/
 
-// export const constantRouterMap = [
-// 	{
-// 		path: '/',
-// 		redirect: '/login',
-// 		hidden: true
-// 	},
-// 	{
-// 		path: '/login',
-// 		name: '登录页面',
-// 		hidden: true,
-// 		component: Login
-// 	},
-// ]
+const routes = [
+  {
+    path: "/",
+    redirect: "/login"
+  },
+  {
+    path: "/login",
+    component: Login
+  }
+]
 
-// export default new Router({
-// 	routes: constantRouterMap
-// })
-// // 异步挂载的路由
+const router = new VueRouter({
+  routes
+})
+
+export default router
+
+// 异步挂载的路由
 
 // 动态需要根据权限加载的路由表
 const asyncRouterMap = [
@@ -145,10 +93,38 @@ const asyncRouterMap = [
 				},
 				component: Calories,
 			}
+      ,
+			{
+				path: "/food",
+				meta: {
+					title: 'food', icon: 'el-icon-menu', roles: ['超级管理员', '普通管理员', '普通用户']
+				},
+				component: Food,
+			}
 		]
 	},
 	{ path: '*', redirect: '/404', hidden: true, component: NotFound }
 ]
+
+
+// 挂载路由导航守卫
+router.beforeEach((to, from, next) => {
+  // to:将要访问的路径
+  // from:从哪里访问的路径
+  // next:之后要做的任务，是一个函数
+  // next()放行， next('/URL')强制跳转的路径。
+  
+  // 访问路径为登录，直接放行
+  if (to.path == '/login') next();
+
+  // 从 session 获取登录 flag
+  const flagStr = window.sessionStorage.getItem("flag");
+
+  // 没登录去登录
+  if (!flagStr) next('/login');
+
+  next();
+})
 
 /**
  * 根据传入的角色，从上述的 asyncRouterMap 中筛选该角色能访问的路由
@@ -191,30 +167,3 @@ function filterAsyncRoutes(routes, roles) {
 
   return res
 }
-
-// // const whiteList = ['/login'] // 不重定向白名单
-// // 挂载路由导航守卫
-// router.beforeEach((to, from, next) => {
-// 	// to:将要访问的路径
-// 	// from:从哪里访问的路径
-// 	// next:之后要做的任务，是一个函数
-// 	//    next()放行， next('/URL')强制跳转的路径。
-// 	if (to.path == '/login') return next();// 访问路径为登录
-// 	else {
-// 		// 获取flag
-// 		const flagStr = window.sessionStorage.getItem("flag");// session取值
-// 		const roleStr = window.sessionStorage.getItem("role");// session取值
-// 		if (!flagStr || !roleStr) return next('/login');// 没登录去登录
-// 		else {
-// 			const isRoleRoutes = window.sessionStorage.getItem("roleRoutes"); // 获取是否存在异步路由
-// 			if (!isRoleRoutes) {
-// 				const accessRoutes = getRoutesOfRole(roleStr);
-// 				router.addRoutes(accessRoutes);
-// 				console.log(router.getRoutes());
-// 				window.sessionStorage.setItem("roleRoutes", "ok")
-// 			}
-
-// 			next();//当有用户权限的时候，说明所有可访问路由已生成 如访问没权限的全面会自动进入404页面
-// 		}
-// 	}
-// })

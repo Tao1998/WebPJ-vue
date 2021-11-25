@@ -34,6 +34,11 @@ const routes = [
     path: "/login",
     component: Login
   }
+  ,
+  {
+    path: "/404",
+    component: NotFound
+  }
 ]
 
 const router = new VueRouter({

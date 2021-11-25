@@ -20,7 +20,7 @@
           :collapse="isCollapse"
           :collapse-transition="false"
           :router="true"
-          :default-active="activePath"
+          :default-active="$route.path"
         >
           <el-submenu
             :index="item.id + ''"
@@ -78,6 +78,7 @@ export default {
   // 类似onload
   created() {
     this.getMenuList();
+    // this.getMenuListByRole();
     this.activePath = window.sessionStorage.getItem("activePath"); // 取出session里的访问路径
   },
 
@@ -86,10 +87,31 @@ export default {
       window.sessionStorage.clear();
       this.$router.push("/login");
     },
-    // 获取所有的导航菜单
+    // // 获取所有的导航菜单
+    // async getMenuList() {
+    //   // console.log("getMenuList");
+    //   const { data: res } = await this.$http.get("menus");
+    //   if (res.flag != 200) return this.$message.error("操作失败！！！");
+    //   this.menuList = res.menus;
+    // },
+
+    // 根据角色获取所有的导航菜单
     async getMenuList() {
-      // console.log("getMenuList");
-      const { data: res } = await this.$http.get("menus");
+      console.log("getMenuListByRole");
+      const role = window.sessionStorage.getItem("role");
+      let roleID;
+      switch (role) {
+        case '超级管理员':
+        case '普通管理员':
+          roleID = 100;          
+          break;
+        case '普通用户':
+          roleID = 200;
+          break;
+        default:
+          break;
+      }
+      const { data: res } = await this.$http.get("menusByRole?roleID=" + roleID);
       if (res.flag != 200) return this.$message.error("操作失败！！！");
       this.menuList = res.menus;
     },

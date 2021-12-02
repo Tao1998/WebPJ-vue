@@ -2,8 +2,8 @@
   <el-container class="home-container">
     <el-header>
       <div>
-        <img src="../assets/shoes.png" alt class="logo_img" />
-        <span>运动管理平台</span>
+        <!-- <img src="../assets/shoes.png" alt class="logo_img" /> -->
+        <span>IMDb</span>
       </div>
       <el-button type="info" @click="logout">退出</el-button>
     </el-header>
@@ -137,7 +137,7 @@ export default {
   justify-content: space-between; // 左右贴边
   padding-left: 0%; // 左边界
   align-items: center; // 水平
-  color: #fff;
+  color: #d2dae2;
   font-size: 20px;
   > div {
     //左侧div加布局
@@ -149,13 +149,13 @@ export default {
   }
 }
 .el-aside {
-  background-color: #333744;
+  background-color: #485460;
   .el-menu {
     border-right: none; // 对其右边框
   }
 }
 .el-main {
-  background-color: #eaedf1;
+  background-color: #000000;
 }
 
 .logo_img {
@@ -164,7 +164,7 @@ export default {
 }
 
 .toggle-button {
-  background-color: #4a5064;
+  background-color: #2d2e30;
   font-size: 10px;
   line-height: 24px;
   color: #fff;

@@ -1,5 +1,5 @@
 <template>
-    <el-empty description="卡路里"></el-empty>
+    <el-empty description="想看列表"></el-empty>
 </template>
 <script>
 export default {

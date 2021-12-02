@@ -68,9 +68,9 @@ const asyncRouterMap = [
 				component: Welcome,
 			},
 			{
-				path: "/user",
+				path: "/userlist",
 				meta: {
-					title: 'user', icon: 'el-icon-menu', roles: ['超级管理员', '普通管理员']
+					title: 'userList', icon: 'el-icon-menu', roles: ['超级管理员', '普通管理员']
 				},
 				component: UserList,
 			}

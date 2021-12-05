@@ -60,15 +60,11 @@ export default {
       menuList: [],
       iconsObject: {
         100: "iconfont icon-guanliyuan",
-        200: "iconfont icon-yundong",
+        200: "iconfont icon-movie",
         101: "iconfont icon-liebiao",
         102: "iconfont icon-mima",
-        103: "iconfont icon-yundong",
-        104: "iconfont icon-shangpin",
-        201: "iconfont icon-shu",
-        202: "iconfont icon-qialuli",
-        203: "iconfont icon-shiwu",
-        204: "iconfont icon-denglu",
+        201: "iconfont icon-hot",
+        202: "iconfont icon-shu",
       },
       isCollapse: false,
       // 被激活的连接
@@ -155,7 +151,7 @@ export default {
   }
 }
 .el-main {
-  background-color: #000000;
+  background-color: #a8a9b3;
 }
 
 .logo_img {

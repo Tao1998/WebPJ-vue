@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "240129",
+      "name": "hot",
+      "font_class": "hot",
+      "unicode": "e758",
+      "unicode_decimal": 59224
+    },
+    {
+      "icon_id": "7573264",
+      "name": "movie",
+      "font_class": "movie",
+      "unicode": "e6f8",
+      "unicode_decimal": 59128
+    },
+    {
       "icon_id": "629357",
       "name": "搜索",
       "font_class": "sousuo",
@@ -18,13 +32,6 @@
       "font_class": "guanliyuan",
       "unicode": "e600",
       "unicode_decimal": 58880
-    },
-    {
-      "icon_id": "435924",
-      "name": "卡路里",
-      "font_class": "qialuli",
-      "unicode": "e7b4",
-      "unicode_decimal": 59316
     },
     {
       "icon_id": "826948",
@@ -53,13 +60,6 @@
       "font_class": "shu",
       "unicode": "e607",
       "unicode_decimal": 58887
-    },
-    {
-      "icon_id": "6489735",
-      "name": "食物",
-      "font_class": "shiwu",
-      "unicode": "e691",
-      "unicode_decimal": 59025
     },
     {
       "icon_id": "11372676",

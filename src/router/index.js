@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// 引入login组件
+
 import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
 import NotFound from '../components/NotFound.vue'
@@ -8,8 +8,7 @@ import Welcome from '../components/Welcome.vue'
 import UserList from '../components/admin/UserList.vue'
 import Right from '../components/admin/Rights.vue'
 import Film from '../components/user/Film.vue'
-import Calories from '../components/user/Calories.vue'
-import Food from '../components/user/Food.vue'
+import WatchList from '../components/user/WatchList.vue'
 
 Vue.use(VueRouter)
 
@@ -55,7 +54,7 @@ const asyncRouterMap = [
 		path: '/home',
 		// name: 'permissionhome',
 		meta: {
-			title: 'home', icon: 'el-icon-setting', roles: ['超级管理员', '普通管理员', '普通用户']
+			title: 'home', roles: ['超级管理员', '普通管理员', '普通用户']
 		},
 		component: Home,
 		redirect: "/welcome",
@@ -63,14 +62,14 @@ const asyncRouterMap = [
 			{
 				path: "/welcome",
 				meta: {
-					title: 'home', icon: 'el-icon-menu', roles: ['超级管理员', '普通管理员', '普通用户']
+					title: 'home', roles: ['超级管理员', '普通管理员', '普通用户']
 				},
 				component: Welcome,
 			},
 			{
 				path: "/userlist",
 				meta: {
-					title: 'userList', icon: 'el-icon-menu', roles: ['超级管理员', '普通管理员']
+					title: 'userList', roles: ['超级管理员', '普通管理员']
 				},
 				component: UserList,
 			}
@@ -78,7 +77,7 @@ const asyncRouterMap = [
 			{
 				path: "/rights",
 				meta: {
-					title: 'rights', icon: 'el-icon-menu', roles: ['超级管理员', '普通管理员']
+					title: 'rights', roles: ['超级管理员', '普通管理员']
 				},
 				component: Right,
 			}
@@ -86,25 +85,17 @@ const asyncRouterMap = [
 			{
 				path: "/introduction",
 				meta: {
-					title: 'introduction', icon: 'el-icon-menu', roles: ['超级管理员', '普通管理员', '普通用户']
+					title: 'introduction', roles: ['超级管理员', '普通管理员', '普通用户']
 				},
 				component: Film,
 			}
 			,
 			{
-				path: "/calories",
+				path: "/watchlist",
 				meta: {
-					title: 'calories', icon: 'el-icon-menu', roles: ['超级管理员', '普通管理员', '普通用户']
+					title: 'watchlist', roles: ['超级管理员', '普通管理员', '普通用户']
 				},
-				component: Calories,
-			}
-      ,
-			{
-				path: "/food",
-				meta: {
-					title: 'food', icon: 'el-icon-menu', roles: ['超级管理员', '普通管理员', '普通用户']
-				},
-				component: Food,
+				component: WatchList,
 			}
 		]
 	},

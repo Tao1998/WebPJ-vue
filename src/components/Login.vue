@@ -58,7 +58,9 @@ export default {
         if (res.flag == "ok") {
           window.sessionStorage.setItem('flag','ok'); // session 放置
           const role = res.user.role; // 获取后台传过来的 role
+          const id = res.user.id;
           window.sessionStorage.setItem('role', role); // session 放置
+          window.sessionStorage.setItem('id', id)
           const routes = getRoutesOfRole([role]) // 根据用户角色筛选出该用户可访问的路由列表
           this.$router.addRoutes(routes); // 把刚才筛选出来的，该角色可访问的路由表添加进 router
           this.$message.success("登陆成功！！！");          

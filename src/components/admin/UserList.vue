@@ -266,7 +266,7 @@ export default {
     async getUserList() {
       // 调用post请求
       const { data: res } = await this.$http.get("allUser", {
-        params: this.queryInfo,
+        params: this.queryInfo, 
       });
       this.userlist = res.data; // 将返回数据赋值
       this.total = res.numbers; // 总个数

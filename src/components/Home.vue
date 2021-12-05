@@ -1,19 +1,27 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Bruce
+ * @Date: 2021-11-18 16:27:25
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-12-05 21:12:58
+-->
 <template>
   <el-container class="home-container">
     <el-header>
       <div>
         <!-- <img src="../assets/shoes.png" alt class="logo_img" /> -->
-        <span>IMDb</span>
+        <span>MoviePlayform</span>
       </div>
       <el-button type="info" @click="logout">退出</el-button>
     </el-header>
     <el-container>
       <!--侧边布局-->
-      <el-aside :width="isCollapse ? '64px' : '200px'">
+      <el-aside :width="isCollapse ? '64px' : '160px'">
         <!--伸缩按钮-->
         <div class="toggle-button" @click="toggleCollapase">|||</div>
         <el-menu
-          background-color="#545c64"
+          background-color="#3c3c3c"
           text-color="#fff"
           active-text-color="#ffd04b"
           unique-opened
@@ -66,7 +74,7 @@ export default {
         201: "iconfont icon-hot",
         202: "iconfont icon-shu",
       },
-      isCollapse: false,
+      isCollapse: true,
       // 被激活的连接
       activePath: "",
     };
@@ -128,12 +136,12 @@ export default {
   height: 100%;
 }
 .el-header {
-  background-color: #373d41;
+  background-color: #333333;
   display: flex;
   justify-content: space-between; // 左右贴边
   padding-left: 0%; // 左边界
   align-items: center; // 水平
-  color: #d2dae2;
+  color: #dddddd;
   font-size: 20px;
   > div {
     //左侧div加布局
@@ -145,13 +153,13 @@ export default {
   }
 }
 .el-aside {
-  background-color: #485460;
+  background-color: #3c3c3c;
   .el-menu {
     border-right: none; // 对其右边框
   }
 }
 .el-main {
-  background-color: #a8a9b3;
+  background-color: #000000;
 }
 
 .logo_img {
@@ -160,7 +168,7 @@ export default {
 }
 
 .toggle-button {
-  background-color: #2d2e30;
+  background-color: rgba(73, 73, 73, 0.808);
   font-size: 10px;
   line-height: 24px;
   color: #fff;

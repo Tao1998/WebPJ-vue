@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Bruce
+ * @Date: 2021-11-21 16:06:45
+ * @LastEditors: Bruce
+ * @LastEditTime: 2021-12-05 21:20:17
+-->
 <template>
   <div>
     <!-- 面包屑导航
@@ -263,25 +271,34 @@ export default {
     };
   },
   methods: {
+    /**
+     * 获取用户列表
+     */
     async getUserList() {
       // 调用post请求
       const { data: res } = await this.$http.get("allUser", {
-        params: this.queryInfo, 
+        params: this.queryInfo,
       });
       this.userlist = res.data; // 将返回数据赋值
       this.total = res.numbers; // 总个数
     },
-    // 监听pageSize改变的事件
+    /**
+     * 监听pageSize改变的事件
+     */
     handleSizeChange(newSize) {
       this.queryInfo.pageSize = newSize;
       this.getUserList(); // 数据发生改变重新申请数据
     },
-    // 监听pageNum改变的事件
+    /**
+     * 监听pageNum改变的事件
+     */
     handleCurrentChange(newPage) {
       this.queryInfo.pageNum = newPage;
       this.getUserList(); // 数据发生改变重新申请数据
     },
-    // 修改用户状态
+    /**
+     * 修改用户状态
+     */
     async userStateChanged(userinfo) {
       const { data: res } = await this.$http.put(
         `updateState?id=${userinfo.id}&state=${userinfo.state}`
@@ -292,11 +309,15 @@ export default {
       }
       this.$message.success("操作成功！！！");
     },
-    // 监听添加用户
+    /**
+     * 监听添加用户
+     */
     addDialogClosed() {
       this.$refs.addFormRef.resetFields(); // 重置表单项
     },
-    // 添加用户
+    /**
+     * 添加用户
+     */
     addUser() {
       this.$refs.addFormRef.validate(async (valid) => {
         console.log(valid);
@@ -313,24 +334,28 @@ export default {
         this.getUserList();
       });
     },
-    // 展示修改框
+    /**
+     * 展示修改框
+     */
     async showEditDialog(id) {
       const { data: res } = await this.$http.get("getUpdate?id=" + id);
       this.editForm = res;
       this.editDialogVisible = true;
     },
-    // 关闭修改框
+    /**
+     * 关闭修改框
+     */
     editDialogClosed() {
       this.$refs.editFormRef.resetFields();
     },
-    // 确认修改
+    /**
+     * 确认修改
+     */
     editUserInfo() {
       this.$refs.editFormRef.validate(async (valid) => {
         console.log(valid);
         if (!valid) return;
-        // 发起请求
         const { data: res } = await this.$http.put("editUser", this.editForm);
-        console.log(res);
         if (res != "success") return this.$message.error("操作失败！！！");
         this.$message.success("操作成功！！！");
         //隐藏
@@ -338,7 +363,10 @@ export default {
         this.getUserList();
       });
     },
-    // 删除按钮
+    /**
+     * 删除用户
+     * @param id user id
+     */
     async deleteUser(id) {
       // 弹框
       const confirmResult = await this.$confirm(
@@ -361,17 +389,24 @@ export default {
       this.$message.success("操作成功！！！");
       this.getUserList();
     },
-    // 展示修改角色框
+    /**
+     * 展示修改角色框
+     * @param id user id
+     */
     async showRoleDialog(id) {
       const { data: res } = await this.$http.get("getUpdate?id=" + id);
       this.roleForm = res;
       this.roleDialogVisible = true;
     },
-    // 关闭修改角色框
+    /**
+     * 关闭修改角色框
+     */
     roleDialogClosed() {
       this.$refs.roleFormRef.resetFields();
     },
-    // 确认修改角色
+    /**
+     * 确认修改角色
+     */    
     async editRole() {
       const { data: res } = await this.$http.put(
         `updateRole?id=${this.roleForm.id}&role=${this.roleForm.role}`

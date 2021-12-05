@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Bruce
+ * @Date: 2021-11-24 20:08:29
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-12-05 21:13:03
+-->
 <template>
     <div class="login_container">
         <div class="login_box">
@@ -77,7 +85,7 @@ export default {
 <style lang="less" scoped>
     // 跟节点样式
     .login_container {
-    background-color: #2b4b6b;
+    background-color: #1f1f1f;
     height: 100%;
     }
 

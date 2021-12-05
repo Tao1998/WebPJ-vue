@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: Bruce
+ * @Date: 2021-11-24 20:08:29
+ * @LastEditors: Bruce
+ * @LastEditTime: 2021-12-05 21:18:52
+ */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -104,6 +112,11 @@ const asyncRouterMap = [
 
 
 // 挂载路由导航守卫
+/**
+ * @description: 
+ * @param {*}
+ * @return {*}
+ */
 router.beforeEach((to, from, next) => {
   // to:将要访问的路径
   // from:从哪里访问的路径
@@ -123,8 +136,9 @@ router.beforeEach((to, from, next) => {
 })
 
 /**
- * 根据传入的角色，从上述的 asyncRouterMap 中筛选该角色能访问的路由
- * @param {Array} roles 
+ * @description 根据传入的角色，从上述的 asyncRouterMap 中筛选该角色能访问的路由
+ * @param {Array} roles
+ * @return {Array} 路由列表
  */
 export function getRoutesOfRole(roles) {
   return filterAsyncRoutes(asyncRouterMap, roles)
@@ -132,7 +146,7 @@ export function getRoutesOfRole(roles) {
 
 /**
  * Use meta.role to determine if the current user has permission
- * @param roles
+ * @param roles Array of role
  * @param route
  */
 function hasPermission(roles, route) {
@@ -146,7 +160,7 @@ function hasPermission(roles, route) {
 /**
  * Filter asynchronous routing tables by recursion
  * @param routes asyncRoutes
- * @param roles
+ * @param roles Array of role
  */
 function filterAsyncRoutes(routes, roles) {
   const res = []

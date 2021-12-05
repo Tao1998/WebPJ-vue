@@ -1,46 +1,70 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Bruce
+ * @Date: 2021-11-24 16:24:21
+ * @LastEditors: Bruce
+ * @LastEditTime: 2021-12-05 21:46:27
+-->
 <template>
   <div>
-    <div class="block">
-      <el-carousel
-        v-if="movielist.length"
-        indicator-position="none"
-        trigger="click"
-        height="400px"
-        interval="15000"
-      >
-        <!-- v-if 等获取movielist之后渲染 -->
-        <el-carousel-item
-          v-for="item in imagebox"
-          :key="item.idx"
-          align="center"
-        >
-          <el-card class="box-card" :body-style="{ padding: '0px' }">
-            <div class="image-box">
-              <img :src="item.idView" class="image" />
-              <!-- <img :src="movielist[item.idx].imgSrc" class="image" /> -->
-            </div>
-            <div>
-              <div class="movie-name">
-                {{ movielist[item.idx]["name"] }}
-              </div>
-              <div style="padding: 10px">
-                <!-- 添加 -->
-                <el-tooltip
-                  effect="dark"
-                  content="添加"
-                  placement="top-start"
-                  :enterable="false"
-                >
-                  <el-button type="warning" plain @click="addWatch(item.idx)"
-                    >watch</el-button
-                  >
-                </el-tooltip>
-              </div>
-            </div>
-          </el-card>
-        </el-carousel-item>
-      </el-carousel>
+    <el-carousel :interval="5000" trigger="click" height="360px">
+      <el-carousel-item v-for="item in post" :key="item.idx" align="center">
+        <img :src="item.idView" height="100%" />
+      </el-carousel-item>
+    </el-carousel>
+    <div class="title-div">
+      <span style="color: azure">What to watch</span>
     </div>
+    <el-carousel
+      v-if="movielist.length"
+      indicator-position="none"
+      trigger="click"
+      height="400px"
+      :autoplay="false"
+      :loop="false"
+    >
+      <!-- v-if 等获取movielist之后渲染 -->
+      <el-carousel-item
+        v-for="item in even(imagebox)"
+        :key="item.idx"
+        align="center"
+      >
+        <el-row>
+          <el-col :span="6" v-for="(value, offset) in 4" :key="value">
+            <el-card class="movie-card" :body-style="{ padding: '0px' }">
+              <div class="image-box">
+                <img :src="movieImgSrc(item.idx, offset)" class="image" />
+                <!-- <img :src="item.idView" class="image" /> -->
+                <!-- <img :src="movielist[item.idx].imgSrc" class="image" /> -->
+              </div>
+              <div>
+                <div class="movie-name">
+                  <!-- {{ movielist[item.idx+offset]["name"] }} -->
+                  {{ movieName(item.idx, offset) }}
+                </div>
+                <div style="padding: 10px">
+                  <!-- 添加 -->
+                  <el-tooltip
+                    effect="dark"
+                    content="添加"
+                    placement="top"
+                    :enterable="false"
+                  >
+                    <el-button
+                      type="warning"
+                      plain
+                      @click="addWatch(item.idx + offset)"
+                      >+ Watchlist</el-button
+                    >
+                  </el-tooltip>
+                </div>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
+      </el-carousel-item>
+    </el-carousel>
 
     <!-- <el-card>
       电影列表
@@ -72,6 +96,11 @@ export default {
 
       total: 0, // 最大数据记录
 
+      post: [
+        { idx: 0, idView: require("../../assets/post/m1.jpg") },
+        { idx: 1, idView: require("../../assets/post/m2.jpg") },
+        { idx: 2, idView: require("../../assets/post/m3.jpg") },
+      ],
       imagebox: [
         { idx: 0, idView: require("../../assets/imagebox/m1.jpg") },
         { idx: 1, idView: require("../../assets/imagebox/m2.jpg") },
@@ -84,24 +113,52 @@ export default {
       ],
     };
   },
+  computed: {
+    /**
+     * @param {number} idx first item of list
+     * @param {number} offset
+     * @return {string}
+     */    
+    movieName() {
+      return function (idx, offset) {
+        return this.movielist[idx + offset]["name"];
+      };
+    },
+    /** 
+     * @param {number} idx
+     * @param {number} offset
+     * @return {string} 
+     */    
+    movieImgSrc() {
+      return function (idx, offset) {
+        return this.imagebox[idx + offset]["idView"];
+      };
+    },
+  },
   methods: {
+    /**
+     * @description: step=4
+     * @param {*} imagebox
+     * @return {*}
+     */    
+    even: function (imagebox) {
+      return imagebox.filter(function (item) {
+        return item.idx % 4 === 0;
+      });
+    },
+    /**
+     * 获取电影列表
+     */    
     async getMovieList() {
       // 调用get请求
       const { data: res } = await this.$http.get("allMovie");
       this.movielist = res.data; // 将返回数据赋值
       this.total = res.numbers; // 总个数
     },
-    // // 监听pageSize改变的事件
-    // handleSizeChange(newSize) {
-    //   this.queryInfo.pageSize = newSize;
-    //   this.getMovieList(); // 数据发生改变重新申请数据
-    // },
-    // // 监听pageNum改变的事件
-    // handleCurrentChange(newPage) {
-    //   this.queryInfo.pageNum = newPage;
-    //   this.getMovieList(); // 数据发生改变重新申请数据
-    // },
-    // 添加关注电影
+    /**
+     * 添加关注电影
+     * @param {number} mindex id = index + 1
+     */    
     async addWatch(mindex) {
       const { data: res } = await this.$http.put(
         `addWatch?id=${this.id}&mid=${mindex + 1}`
@@ -116,12 +173,15 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 14px;
-  opacity: 0.75;
-  line-height: 150px;
-  margin: 0;
+.title-div {
+  //左侧div加布局
+  display: flex;
+  align-items: center;
+  span {
+    font-size: 40px;
+    font-weight: bold;
+    margin: 15px;
+  }
 }
 
 @image_width: 160px;
@@ -132,15 +192,17 @@ export default {
 }
 
 .image {
-  /*设置图片高度和宽度*/
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /*图片居中裁切*/
 }
 
-.box-card {
+.movie-card {
   width: @image_width;
   height: 360px; // 400px
+  background-color:rgba(73, 73, 73, 0.808);
+  color: azure;
+  border: 0px;
 }
 
 .movie-name {
@@ -148,7 +210,6 @@ export default {
   width: @image_width - 20px;
   text-align: left;
   font-weight: bold;
-  background: yellowgreen;
   padding-top: 10px;
   padding-right: 10px;
   padding-left: 10px;

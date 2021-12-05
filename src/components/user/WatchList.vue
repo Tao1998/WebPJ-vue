@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Bruce
+ * @Date: 2021-11-24 16:36:20
+ * @LastEditors: Bruce
+ * @LastEditTime: 2021-12-05 21:26:03
+-->
 <template>
   <div>
     <el-card>
@@ -59,17 +67,12 @@ export default {
       watchlist: [], // 想看电影列表
 
       total: 0, // 最大数据记录
-
-      imagebox: [
-        { id: 0, idView: require("../../assets/imagebox/m1.jpg") },
-        { id: 1, idView: require("../../assets/imagebox/m2.jpg") },
-        { id: 2, idView: require("../../assets/imagebox/m3.jpg") },
-        { id: 3, idView: require("../../assets/imagebox/m4.jpg") },
-        // { id: 4, idView: require("../../assets/imagebox/m5.jpg") },
-      ],
     };
   },
   methods: {
+    /**
+     * 获取关注电影列表
+     */
     async getWatchList() {
       // 调用get请求
       const { data: res } = await this.$http.get("allWatch", {
@@ -83,20 +86,29 @@ export default {
       this.watchlist = res.data; // 将返回数据赋值
       this.total = res.numbers; // 总个数
     },
-    // 监听pageSize改变的事件
+    /**
+     * 监听pageSize改变的事件
+     */
     handleSizeChange(newSize) {
       this.queryInfo.pageSize = newSize;
       this.getWatchList(); // 数据发生改变重新申请数据
     },
-    // 监听pageNum改变的事件
+    /**
+     * 监听pageNum改变的事件
+     */
     handleCurrentChange(newPage) {
       this.queryInfo.pageNum = newPage;
       this.getWatchList(); // 数据发生改变重新申请数据
     },
-    // 删除关注电影
+    /**
+     * @description: 删除关注电影
+     * @param {*} mid id of movie
+     */
     async deleteWatch(mid) {
-      console.log("movie id = "+mid);
-      const {data:res} = await this.$http.delete(`deleteWatch?id=${this.id}&mid=${mid}`);
+      console.log("movie id = " + mid);
+      const { data: res } = await this.$http.delete(
+        `deleteWatch?id=${this.id}&mid=${mid}`
+      );
       if (res != "success") {
         return this.$message.error("操作失败！！！");
       }

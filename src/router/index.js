@@ -4,7 +4,7 @@
  * @Author: Bruce
  * @Date: 2021-11-24 20:08:29
  * @LastEditors: Bruce
- * @LastEditTime: 2021-12-05 21:18:52
+ * @LastEditTime: 2021-12-06 09:29:58
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -112,11 +112,6 @@ const asyncRouterMap = [
 
 
 // 挂载路由导航守卫
-/**
- * @description: 
- * @param {*}
- * @return {*}
- */
 router.beforeEach((to, from, next) => {
   // to:将要访问的路径
   // from:从哪里访问的路径

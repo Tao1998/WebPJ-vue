@@ -4,7 +4,7 @@
  * @Author: Bruce
  * @Date: 2021-11-24 20:08:29
  * @LastEditors: Bruce
- * @LastEditTime: 2021-12-06 09:29:58
+ * @LastEditTime: 2021-12-16 23:41:37
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -110,7 +110,7 @@ const asyncRouterMap = [
 	{ path: '*', redirect: '/404', hidden: true, component: NotFound }
 ]
 
-
+var getRouter //用来获取后台拿到的路由
 // 挂载路由导航守卫
 router.beforeEach((to, from, next) => {
   // to:将要访问的路径

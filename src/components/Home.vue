@@ -4,7 +4,7 @@
  * @Author: Bruce
  * @Date: 2021-11-18 16:27:25
  * @LastEditors: Bruce
- * @LastEditTime: 2021-12-16 16:03:21
+ * @LastEditTime: 2021-12-18 16:42:37
 -->
 <template>
   <el-container class="home-container">
@@ -17,7 +17,7 @@
     </el-header>
     <el-container>
       <!--侧边布局-->
-      <el-aside :width="isCollapse ? '64px' : '160px'">
+      <el-aside :width="isCollapse ? '64px' : '200px'">
         <!--伸缩按钮-->
         <div class="toggle-button" @click="toggleCollapase">|||</div>
         <el-menu
@@ -43,7 +43,6 @@
               :index="it.path + ''"
               v-for="it in item.slist"
               :key="it.id"
-              @click="saveNavState(it.path + '')"
             >
               <template slot="title">
                 <i :class="iconsObject[it.id]"></i>
@@ -75,15 +74,12 @@ export default {
         202: "iconfont icon-shu",
       },
       isCollapse: true,
-      // 被激活的连接
-      activePath: "",
     };
   },
   // 类似onload
   created() {
     this.getMenuList();
     // this.getMenuListByRole();
-    this.activePath = window.sessionStorage.getItem("activePath"); // 取出session里的访问路径
   },
 
   methods: {
@@ -123,11 +119,6 @@ export default {
     toggleCollapase() {
       this.isCollapse = !this.isCollapse;
     },
-    // 保存二级菜单的路径
-    saveNavState(activePath) {
-      window.sessionStorage.setItem("activePath", activePath); // 存放点击的二级菜单
-      this.activePath = activePath; // 给点击的菜单添加高亮
-    },
   },
 };
 </script>
@@ -147,9 +138,7 @@ export default {
     //左侧div加布局
     display: flex;
     align-items: center;
-    span {
-      margin-left: 15px;
-    }
+    margin-left: 20px;
   }
 }
 .el-aside {

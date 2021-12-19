@@ -3,8 +3,8 @@
  * @version: 
  * @Author: Bruce
  * @Date: 2021-11-24 20:08:29
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-12-05 21:13:03
+ * @LastEditors: Bruce
+ * @LastEditTime: 2021-12-16 23:33:56
 -->
 <template>
     <div class="login_container">
@@ -71,7 +71,8 @@ export default {
           window.sessionStorage.setItem('id', id)
           const routes = getRoutesOfRole([role]) // 根据用户角色筛选出该用户可访问的路由列表
           this.$router.addRoutes(routes); // 把刚才筛选出来的，该角色可访问的路由表添加进 router
-          this.$message.success("登陆成功！！！");          
+          localStorage.setItem('router', this.$router.getRoutes())
+          this.$message.success("登陆成功！！！");
           this.$router.push({ path: "/home"});
         }else{
           this.$message.error("登录失败！！！");

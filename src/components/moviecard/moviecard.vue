@@ -145,7 +145,7 @@ export default {
     max-width: @image_width;
     min-width: @image_width;
     height: 360px; // 400px
-    // box-shadow: 0 0 5px #ddd;
+    box-shadow: 0 0 10px #ddd;
     background-color: rgba(73, 73, 73, 0.808);
     color: azure;
     border: 0px;

@@ -69,15 +69,13 @@ export default {
           const id = res.user.id;
           window.sessionStorage.setItem('role', role); // session 放置
           window.sessionStorage.setItem('id', id)
-          const routes = getRoutesOfRole([role]) // 根据用户角色筛选出该用户可访问的路由列表
-          this.$router.addRoutes(routes); // 把刚才筛选出来的，该角色可访问的路由表添加进 router
-          localStorage.setItem('router', this.$router.getRoutes())
           this.$message.success("登陆成功！！！");
-          this.$router.push({ path: "/home"});
+          // FIXME: catch err
+          this.$router.push({ path: "/home"}).catch(()=>{});
         }else{
           this.$message.error("登录失败！！！");
         }
-        
+
       });
     }
   }

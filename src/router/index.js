@@ -33,23 +33,23 @@ Vue.use(VueRouter)
 **/
 
 const routes = [
-  {
-    path: "/",
-    redirect: "/login"
-  },
-  {
-    path: "/login",
-    component: Login
-  }
-  ,
-  {
-    path: "/404",
-    component: NotFound
-  }
+	{
+		path: "/",
+		redirect: "/login"
+	},
+	{
+		path: "/login",
+		component: Login
+	}
+	,
+	{
+		path: "/404",
+		component: NotFound
+	}
 ]
 
 const router = new VueRouter({
-  routes
+	routes
 })
 
 export default router
@@ -70,7 +70,7 @@ const asyncRouterMap = [
 			{
 				path: "/welcome",
 				meta: {
-					title: 'home', roles: ['超级管理员', '普通管理员', '普通用户']
+					title: 'welcome', roles: ['超级管理员', '普通管理员', '普通用户']
 				},
 				component: Welcome,
 			},
@@ -113,21 +113,30 @@ const asyncRouterMap = [
 var getRouter //用来获取后台拿到的路由
 // 挂载路由导航守卫
 router.beforeEach((to, from, next) => {
-  // to:将要访问的路径
-  // from:从哪里访问的路径
-  // next:之后要做的任务，是一个函数
-  // next()放行， next('/URL')强制跳转的路径。
-  
-  // 访问路径为登录，直接放行
-  if (to.path == '/login') next();
+	// to:将要访问的路径
+	// from:从哪里访问的路径
+	// next:之后要做的任务，是一个函数
+	// next()放行， next('/URL')强制跳转的路径。
 
-  // 从 session 获取登录 flag
-  const flagStr = window.sessionStorage.getItem("flag");
-
-  // 没登录去登录
-  if (!flagStr) next('/login');
-
-  next();
+	// 访问路径为登录，直接放行
+	if (to.path == '/login') next();// 访问路径为登录，直接放行
+	else {
+		// 从 session 获取登录 flag
+		const flagStr = window.sessionStorage.getItem("flag");
+		// 没登录去登录
+		if (!flagStr) next('/login');
+		else {
+			const role = window.sessionStorage.getItem("role");
+			const l = router.getRoutes().length;
+			if (l < 4) {
+				getRouter = getRoutesOfRole([role]) // 根据用户角色筛选出该用户可访问的路由列表
+				router.addRoutes(getRouter); // 把刚才筛选出来的，该角色可访问的路由表添加进 router
+				next({ ...to}); // 确保addRoutes()时动态添加的路由已经被完全加载上去
+			} else {
+				next();
+			}		
+		}
+	}
 })
 
 /**
@@ -136,7 +145,7 @@ router.beforeEach((to, from, next) => {
  * @return {Array} 路由列表
  */
 export function getRoutesOfRole(roles) {
-  return filterAsyncRoutes(asyncRouterMap, roles)
+	return filterAsyncRoutes(asyncRouterMap, roles)
 }
 
 /**
@@ -145,11 +154,11 @@ export function getRoutesOfRole(roles) {
  * @param route
  */
 function hasPermission(roles, route) {
-  if (route.meta && route.meta.roles) {
-    return roles.some(role => route.meta.roles.includes(role))
-  } else {
-    return true
-  }
+	if (route.meta && route.meta.roles) {
+		return roles.some(role => route.meta.roles.includes(role))
+	} else {
+		return true
+	}
 }
 
 /**
@@ -158,17 +167,17 @@ function hasPermission(roles, route) {
  * @param roles Array of role
  */
 function filterAsyncRoutes(routes, roles) {
-  const res = []
+	const res = []
 
-  routes.forEach(route => {
-    const tmp = { ...route }
-    if (hasPermission(roles, tmp)) {
-      if (tmp.children) {
-        tmp.children = filterAsyncRoutes(tmp.children, roles)
-      }
-      res.push(tmp)
-    }
-  })
+	routes.forEach(route => {
+		const tmp = { ...route }
+		if (hasPermission(roles, tmp)) {
+			if (tmp.children) {
+				tmp.children = filterAsyncRoutes(tmp.children, roles)
+			}
+			res.push(tmp)
+		}
+	})
 
-  return res
+	return res
 }
